@@ -10,13 +10,13 @@ public class Flat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(mappedBy = "flat")
+    @OneToMany(mappedBy = "flat",fetch = FetchType.EAGER)
     private Set<Contracts> contracts;
 
     private String adress;
     private Double square;
     private Boolean isBalcon;
-    private int numberRooms;
+    private Long numberRooms;
     private Long value;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -76,11 +76,11 @@ public class Flat {
         isBalcon = balcon;
     }
 
-    public int getNumberRooms() {
+    public Long getNumberRooms() {
         return numberRooms;
     }
 
-    public void setNumberRooms(int numberRooms) {
+    public void setNumberRooms(Long numberRooms) {
         this.numberRooms = numberRooms;
     }
 
@@ -122,5 +122,22 @@ public class Flat {
 
     public void setRecommendedValue(RecommendedValue recommendedValue) {
         this.recommendedValue = recommendedValue;
+    }
+
+    @Override
+    public String toString() {
+        return "Flat{" +
+                "id=" + id +
+                ", contracts=" + contracts +
+                ", adress='" + adress + '\'' +
+                ", square=" + square +
+                ", isBalcon=" + isBalcon +
+                ", numberRooms=" + numberRooms +
+                ", value=" + value +
+                ", plan=" + plan +
+                ", repair=" + repair +
+                ", walls=" + walls +
+                ", recommendedValue=" + recommendedValue +
+                '}';
     }
 }

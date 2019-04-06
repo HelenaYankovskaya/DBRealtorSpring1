@@ -3,8 +3,9 @@ package com.it.app.model;
 import javax.persistence.*;
 import java.util.Set;
 
-@Table
+
 @Entity
+@Table
 public class UserRole {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +24,14 @@ public class UserRole {
         this.id = id;
     }
 
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
+
     public String getRole() {
         return role;
     }
@@ -31,11 +40,4 @@ public class UserRole {
         this.role = role;
     }
 
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
 }

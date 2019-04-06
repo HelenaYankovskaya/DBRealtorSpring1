@@ -1,21 +1,18 @@
 package com.it.app.config;
 
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -24,19 +21,26 @@ import java.util.Properties;
 @PropertySource("classpath:database.properties")
 @ComponentScan("com.it.app")
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = {"com.it.app.repository"})
+@EnableJpaRepositories(basePackages = {
+        "com.it.app.repository"
+})
 public class AppConfiguration {
 
-    @Value("com.mysql.cj.jdbc.Driver")
+    @Value("${connection.driver_class}")
     private String driverClass;
 
-    @Value("jdbc:mysql://localhost:3306/test?useLegacyDatetimeCode=false&amp;serverTimezone=UTC")
+    @Value("${connection.url}")
     private String url;
+
 
     @Bean
     public DataSource dataSource() {
-        EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
-        return builder.setType(EmbeddedDatabaseType.H2).addScript("/start.sql").build();
+        DriverManagerDataSource driver = new DriverManagerDataSource();
+        driver.setDriverClassName(driverClass);
+        driver.setUrl(url);
+        driver.setUsername("root");
+        driver.setPassword("123456");
+        return driver;
     }
 
     @Bean
@@ -59,10 +63,8 @@ public class AppConfiguration {
 
     private Properties additionalProperties() {
         Properties properties = new Properties();
-        properties.setProperty("hibernate.hbm2ddl.auto", "update");
-        properties.setProperty("hibernate.show_sql", "true");
-        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");
+        properties.setProperty("hibernate.hbm2ddl.auto", "create");
+        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
         return properties;
     }
-
 }

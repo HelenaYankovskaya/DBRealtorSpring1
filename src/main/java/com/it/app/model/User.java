@@ -9,16 +9,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(mappedBy = "user")
-    private Client clients;
-
-    @OneToOne(mappedBy = "user")
-    private Realtor realtor;
-
     private String name;
 
+    private String fnumber;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "UserRoleId")
     private UserRole userRole;
 
     public Long getId() {
@@ -37,12 +32,12 @@ public class User {
         this.name = name;
     }
 
-    public Client getClients() {
-        return clients;
+    public String getFnumber() {
+        return fnumber;
     }
 
-    public void setClients(Client clients) {
-        this.clients = clients;
+    public void setFnumber(String fnumber) {
+        this.fnumber = fnumber;
     }
 
     public UserRole getUserRole() {
@@ -53,20 +48,12 @@ public class User {
         this.userRole = userRole;
     }
 
-    public Realtor getRealtor() {
-        return realtor;
-    }
-
-    public void setRealtor(Realtor realtor) {
-        this.realtor = realtor;
-    }
-
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", fnumber='" + fnumber + '\'' +
                 '}';
     }
-
 }

@@ -2,7 +2,6 @@ package com.it.app;
 
 import com.it.app.config.AppConfiguration;
 import com.it.app.model.User;
-import com.it.app.model.UserRole;
 import com.it.app.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -16,6 +15,7 @@ public class Main {
     @Autowired
     private UserRepository userRepository;
 
+
     public static void main(String[] args) {
         AnnotationConfigApplicationContext annotatedClassApplicationContext = new AnnotationConfigApplicationContext(AppConfiguration.class);
         Main main = annotatedClassApplicationContext.getBean("main", Main.class);
@@ -27,14 +27,14 @@ public class Main {
         System.out.println(one.isPresent());
 
         User user = new User();
-        UserRole userRole = new UserRole();
         user.setName("Vova");
+        user.setFnumber("8888777");
         main.getUserRepository().save(user);
         Optional<User> three = main.getUserRepository().findById(3L);
         three.ifPresent(System.out::println);
 
-        user.setName("Mike");
-
+        user.setName("Max");
+        user.setFnumber("9999333");
         main.getUserRepository().saveAndFlush(user);
         three = main.getUserRepository().findById(3L);
         three.ifPresent(System.out::println);

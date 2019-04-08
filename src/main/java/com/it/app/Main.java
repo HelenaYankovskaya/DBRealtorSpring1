@@ -26,41 +26,45 @@ public class Main {
     public static void main(String[] args) {
         AnnotationConfigApplicationContext annotatedClassApplicationContext = new AnnotationConfigApplicationContext(AppConfiguration.class);
         Main main = annotatedClassApplicationContext.getBean("main", Main.class);
-        //
+        //Создаем новый объект user1 - запись в таблице user
         User user1 = new User();
+        // определяем имя для user1
         user1.setName("Helen");
+        //сохраняем сведения в таблице
         main.getUserRepository().save(user1);
-
+        //находим в таблице user человека по id  и выводим его на экран
         Optional<User> one = main.getUserRepository().findById(1L);
         System.out.println("===============№1===============");
         one.ifPresent(System.out::println);
-
+        //удаляем эту запись из таблицы user
         one.ifPresent(main.getUserRepository()::delete);
+        //опять пытаемся найти этого же человека и выводим результат на экран (существует ли он?)
         one = main.getUserRepository().findById(1L);
         System.out.println("===============№2===============");
         System.out.println(one.isPresent());
-
+        //аналогично создаем нового userа и выодим его по id
         User user = new User();
         user.setName("Vova");
         main.getUserRepository().save(user);
         Optional<User> three = main.getUserRepository().findById(2L);
         System.out.println("===============№3===============");
         three.ifPresent(System.out::println);
-
+        //меняем имя этого userа на имя Mike
         user.setName("Mike");
+        //сохраняем и обновляем его и выводим на экран опять по id
         main.getUserRepository().saveAndFlush(user);
         three = main.getUserRepository().findById(2L);
         three.ifPresent(System.out::println);
-
+        //находим в таблице и выводим на экран информацию о usere c именем Mike
         Optional<User> four = main.getUserRepository().findByName("Mike");
         System.out.println("===============№4===============");
         four.ifPresent(System.out::println);
-
+        //находим общее количество userов в таблице
         System.out.println("===============№5===============");
         System.out.println("The count of users is = " + main.getUserRepository().findCountOfUsers());
-
+        //удаляем все сведения из таблицы User
         main.getUserRepository().deleteAll();
-        //Добавляем в таблицу Flat  квартиру со значениями 4 комнаты, адрес-Тавлая, цена - 50000
+        //Добавляем в таблицу Flat  квартиру со значениями: 4 комнаты, адрес-Тавлая, цена - 50000
         Flat flat = new Flat();
         flat.setNumberRooms(4L);
         flat.setAdress("Tavlaya street, 44");

@@ -13,10 +13,12 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
 
+//   класс конфиг
 @Configuration
 @PropertySource("classpath:database.properties")
 @ComponentScan("com.it.app")
@@ -32,7 +34,7 @@ public class AppConfiguration {
     @Value("${connection.url}")
     private String url;
 
-
+    //метод позволяет настроить связь с базой данных (определяет драйвер, путь к БД, имя пользователя и пароль)
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource driver = new DriverManagerDataSource();
@@ -43,6 +45,7 @@ public class AppConfiguration {
         return driver;
     }
 
+    //метод позволяет создавать сущности
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
@@ -54,6 +57,7 @@ public class AppConfiguration {
         return localContainerEntityManagerFactoryBean;
     }
 
+    //метод, который создает и управляет транзакциями
     @Bean
     public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
@@ -61,6 +65,7 @@ public class AppConfiguration {
         return transactionManager;
     }
 
+    // метод для добавления дополнительных конфигурационных свойств
     private Properties additionalProperties() {
         Properties properties = new Properties();
         properties.setProperty("hibernate.hbm2ddl.auto", "create");

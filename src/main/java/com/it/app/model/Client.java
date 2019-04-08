@@ -3,7 +3,7 @@ package com.it.app.model;
 import javax.persistence.*;
 import java.util.Set;
 
-
+// класс, где создается таблица Client, ее столбцы и связи с другими таблицами БД
 @Entity
 @Table
 public class Client {

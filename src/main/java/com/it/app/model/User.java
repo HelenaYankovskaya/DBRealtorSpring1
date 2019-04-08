@@ -2,6 +2,7 @@ package com.it.app.model;
 
 import javax.persistence.*;
 
+// класс, где создается таблица User, ее столбцы и связи с другими таблицами БД
 @Table
 @Entity
 public class User {

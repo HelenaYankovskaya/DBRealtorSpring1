@@ -20,8 +20,8 @@ import java.util.Properties;
 
 //   класс конфиг
 @Configuration
-@PropertySource("classpath:database.properties")
-@ComponentScan("com.it.app")
+@PropertySource("classpath:database2.properties")
+@ComponentScan("com.it")
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = {
         "com.it.app.repository"

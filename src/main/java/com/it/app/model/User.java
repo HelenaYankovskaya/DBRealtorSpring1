@@ -1,5 +1,8 @@
 package com.it.app.model;
 
+import com.sun.istack.internal.NotNull;
+
+
 import javax.persistence.*;
 
 // класс, где создается таблица User, ее столбцы и связи с другими таблицами БД
@@ -16,9 +19,11 @@ public class User {
     @OneToOne(mappedBy = "user")
     private Realtor realtor;
 
+
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
+
     @JoinColumn(name = "UserRoleId")
     private UserRole userRole;
 
